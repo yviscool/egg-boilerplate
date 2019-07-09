@@ -33,6 +33,13 @@ export default (appInfo: EggAppInfo) => {
     csrf: false
   };
 
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+    maxAge: 600,
+  };
+
+
 
   config.typeorm = {
     type: 'mysql',
