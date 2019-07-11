@@ -29,7 +29,7 @@ export default class StudentService extends Service {
     const student = await Student.findOne(id, { cache: true });
 
     if (!student) {
-      throw new BadRequestException("找不到该用户");
+      throw new BadRequestException(`找不到id 为${id} 的用户`);
     }
 
     return student;

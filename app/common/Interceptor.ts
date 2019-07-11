@@ -8,9 +8,7 @@ import { ExecutionContext, CallHandler, HttpStatus, EggInterceptor, HttpExceptio
 export class ResultInterceptor extends EggInterceptor {
   intercept(context: ExecutionContext, next: CallHandler<any>) {
     return next.handle().pipe(map(res => {
-      if (!res) {
-
-      } else {
+      if (res) {
         const { code = HttpStatus.OK, msg = 'success', data = null } = res;
         return {
           code,
