@@ -15,6 +15,7 @@ import 'egg-static';
 import 'egg-jsonp';
 import 'egg-view';
 import 'egg-cors';
+import 'egg-alinode';
 import 'egg-pig';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
@@ -32,6 +33,7 @@ declare module 'egg' {
     jsonp?: EggPluginItem;
     view?: EggPluginItem;
     cors?: EggPluginItem;
+    alinode?: EggPluginItem;
     eggpig?: EggPluginItem;
   }
 }

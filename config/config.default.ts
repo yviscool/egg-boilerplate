@@ -1,7 +1,7 @@
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 import { ConnectionOptions } from 'typeorm';
-import { ResultInterceptor, TimeoutInterceptor } from '@common/Interceptor';
-import { HttpExceptionFilter } from '@common/HttpExceptionFilter';
+import { ResultInterceptor, TimeoutInterceptor } from '../app/common/Interceptor';
+import { HttpExceptionFilter } from '../app/common/HttpExceptionFilter';
 import { ValidationPipe } from 'egg-pig';
 
 type TypeOrmConfig = {
@@ -39,6 +39,13 @@ export default (appInfo: EggAppInfo) => {
     maxAge: 600,
   };
 
+  
+  config.alinode = {
+    // 从 `Node.js 性能平台` 获取对应的接入参数
+    enable: true,
+    appid: process.env.EGG_ALINODE_APPID || '',
+    secret: process.env.EGG_ALINODE_SECRET || '',
+  };
 
 
   config.typeorm = {

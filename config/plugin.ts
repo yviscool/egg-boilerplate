@@ -10,6 +10,11 @@ const plugin: EggPlugin = {
     enable: true,
     package: 'egg-cors',
   },
+  alinode: {
+    enable: true,
+    package: 'egg-alinode',
+    env: [ 'prod' ],
+  },
   eggpig: {
     enable: true,
     package: 'egg-pig',
