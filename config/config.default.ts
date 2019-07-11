@@ -1,6 +1,6 @@
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 import { ConnectionOptions } from 'typeorm';
-import { ResultInterceptor } from '@common/Interceptor';
+import { ResultInterceptor, TimeoutInterceptor } from '@common/Interceptor';
 import { HttpExceptionFilter } from '@common/HttpExceptionFilter';
 import { ValidationPipe } from 'egg-pig';
 
@@ -49,7 +49,7 @@ export default (appInfo: EggAppInfo) => {
     database: 'test',
     port: 3306,
     synchronize: true,
-    logging: false, 
+    logging: false,
   };
 
 
@@ -65,7 +65,7 @@ export default (appInfo: EggAppInfo) => {
   config.globalFilters = [HttpExceptionFilter];
 
   // 全局过滤器
-  config.globalInterceptors = [ResultInterceptor];
+  config.globalInterceptors = [TimeoutInterceptor, ResultInterceptor];
 
   // the return config will combines to EggAppConfig
   return config;

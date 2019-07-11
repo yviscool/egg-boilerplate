@@ -1,9 +1,13 @@
-import { map } from 'rxjs/operators';
-import { ExecutionContext, CallHandler, HttpStatus, EggInterceptor } from 'egg-pig';
+import { throwError } from 'rxjs';
+import { map, timeout, catchError } from 'rxjs/operators';
+import { ExecutionContext, CallHandler, HttpStatus, EggInterceptor, HttpException, GatewayTimeoutException } from 'egg-pig';
 
+
+
+// 统一返回
 export class ResultInterceptor extends EggInterceptor {
-  intercept(context: ExecutionContext, call$: CallHandler<any>) {
-    return call$.handle().pipe(map(res => {
+  intercept(context: ExecutionContext, next: CallHandler<any>) {
+    return next.handle().pipe(map(res => {
       if (!res) {
 
       } else {
@@ -15,5 +19,30 @@ export class ResultInterceptor extends EggInterceptor {
         }
       }
     }));
+  }
+}
+
+
+// 超时
+export class TimeoutInterceptor extends EggInterceptor {
+
+  defaultTimeout: number;
+
+  constructor(timeout: number = 5000) {
+    super()
+    this.defaultTimeout = timeout;
+  }
+
+  intercept(context: ExecutionContext, next: CallHandler<any>) {
+    return next.handle().pipe(
+      timeout(this.defaultTimeout),
+      catchError(error => {
+        if (error.name === 'TimeoutError') {
+          // return throwError(new GatewayTimeoutException("接口超时"));
+          throw new GatewayTimeoutException("接口超时");
+        }
+        throw error;
+      }),
+    );
   }
 }

@@ -1,6 +1,8 @@
 import Student from '@model/student';
 import BaseController from '@common/baseController';
 import { Controller, Body, Get, Post, Delete, Put, Query, Param, ParseIntPipe } from 'egg-pig';
+import { from } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 
 @Controller("students")
@@ -25,13 +27,15 @@ export class StudentController extends BaseController {
     }
 
     @Get(":id")
-    async get( @Param('id', ParseIntPipe) id: number) {
+    async get(@Param('id', ParseIntPipe) id: number) {
 
         const { service } = this;
 
         const student = await service.student.get(id);
 
-        return { data: student }
+        return { data: student };
+        // 接口超时设置
+        // return from([2000]).pipe(delay(1000));
     }
 
     @Post()
@@ -50,7 +54,7 @@ export class StudentController extends BaseController {
     ) {
         const { service } = this;
         const data = await service.student.udpate(id, student);
-        return { data, msg: "更新成功"}
+        return { data, msg: "更新成功" }
     }
 
     @Delete(":id")
