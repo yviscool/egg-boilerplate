@@ -1,8 +1,8 @@
-import 'module-alias/register';
-
 import { Application } from 'egg';
 import { createConnection } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+
+let count = 0;
 
 export default class appHooks {
 
@@ -24,9 +24,13 @@ export default class appHooks {
         ...(<any>app.config.typeorm)
       });
 
+      const rows = await app.model.manager.query('select 1 as column1;');
+      const index = count++;
+      app.coreLogger.info(`[egg-typeorm] instance[${index}] status OK, rds currentTime: ${rows[0].currentTime}`);
+
     } catch (error) {
 
-      app.logger.info(JSON.stringify(error))
+      app.logger.error(JSON.stringify(error))
 
     }
 

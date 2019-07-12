@@ -1,7 +1,8 @@
+import 'module-alias/register';
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 import { ConnectionOptions } from 'typeorm';
-import { ResultInterceptor, TimeoutInterceptor } from '../app/common/Interceptor';
-import { HttpExceptionFilter } from '../app/common/HttpExceptionFilter';
+import { ResultInterceptor, TimeoutInterceptor } from '@common/Interceptor';
+import { HttpExceptionFilter } from '@common/HttpExceptionFilter';
 import { ValidationPipe } from 'egg-pig';
 
 type TypeOrmConfig = {
