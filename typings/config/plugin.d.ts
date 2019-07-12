@@ -14,6 +14,7 @@ import 'egg-schedule';
 import 'egg-static';
 import 'egg-jsonp';
 import 'egg-view';
+import 'egg-redis';
 import 'egg-cors';
 import 'egg-pig';
 import { EggPluginItem } from 'egg';
@@ -31,6 +32,7 @@ declare module 'egg' {
     static?: EggPluginItem;
     jsonp?: EggPluginItem;
     view?: EggPluginItem;
+    redis?: EggPluginItem;
     cors?: EggPluginItem;
     alinode?: EggPluginItem;
     eggpig?: EggPluginItem;

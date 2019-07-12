@@ -28,7 +28,29 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1562205018873_1185';
 
   // add your egg config in here
-  config.middleware = [];
+  config.middleware = ['ratelimit'];
+
+  config.ratelimit = {
+    duration: 60000, // 毫秒，一分钟
+    errorMessage: "TOO_MANY_REQUESTS",
+    id: (ctx) => ctx.ip,
+    headers: {
+      remaining: 'Rate-Limit-Remaining',
+      reset: 'Rate-Limit-Reset',
+      total: 'Rate-Limit-Total'
+    },
+    max: 10, // 以内最多请求
+    disableHeader: false,
+  }
+
+  config.redis = {
+    client: {
+      port: 6379,          // Redis port
+      host: '127.0.0.1',   // Redis host
+      password:'auth',
+      db: 0,
+    },
+  }
 
   config.security = {
     csrf: false

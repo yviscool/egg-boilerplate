@@ -21,8 +21,9 @@ export class StudentController extends BaseController {
         @Query('sort') sort: string,
         @Query('order') order: string,
     ) {
-        const { service } = this;
+        const { service, app } = this;
         const data = await service.student.list(page, size, sort, order);
+        await app.redis.set('foo', 'bar');
         return { data };
     }
 
